@@ -7,11 +7,11 @@ import { Link } from "react-router-dom";
 
 export const MainListItems = (
   <div>
-    <ListItem button component={Link} to="/dashboard">
+    <ListItem button component={Link} to="/home">
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
-      <ListItemText primary="Dashboard" />
+      <ListItemText primary="Home Page" />
     </ListItem>
     <ListItem button component={Link} to="/data">
       <ListItemIcon>

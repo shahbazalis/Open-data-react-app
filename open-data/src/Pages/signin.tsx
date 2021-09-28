@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -10,21 +10,60 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useDispatch } from "react-redux";
+import { login, UserInfo } from "../models/apis";
+import { LooseObject } from "../utility/interface";
+import { getStorageData } from "../utility/StorageSession";
 
 const theme = createTheme();
 
+const emptyObject: LooseObject = {};
+
 export default function SignIn() {
   let history = useHistory();
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    let path = `/dashboard`;
-    history.push(path);
+  const dispatch = useDispatch();
+  const [formState, setFormState] = useState({
+    values: emptyObject,
+  });
+
+  useEffect(() => {
+    // * set the variable value
+    setFormState((formState) => ({
+      ...formState,
+    }));
+  }, [formState.values]);
+
+  // text input change event call
+  const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    // *event.persist(), which will remove the synthetic event from the pool and allow references to the event to be retained by user code.
+    event.persist();
+    // * set the variable value in values and touched status
+    setFormState((formState) => ({
+      ...formState,
+      values: {
+        ...formState.values,
+        [event.target.name]:
+          event.target.type === "checkbox"
+            ? event.target.checked
+            : event.target.value,
+      },
+    }));
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+
+    const userInfo: UserInfo = {
+      email: formState.values.email.toLowerCase(),
+      password: formState.values.password,
+    };
+    const loginResult = await login(userInfo);
+    if (loginResult) {
+      const accessToken = await getStorageData("accessToken");
+      dispatch({ type: "SIGN_IN", accessToken: accessToken });
+      let path = `/home`;
+      history.push(path);
+    }
   };
 
   return (
@@ -45,31 +84,29 @@ export default function SignIn() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{ mt: 1 }}
-          >
+          <form onSubmit={handleSubmit}>
             <TextField
+              id="txt-email"
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
               name="email"
-              autoComplete="email"
-              autoFocus
+              onChange={handleChange}
+              type="text"
+              value={formState.values.email || ""}
+              variant="outlined"
+              label="Email Address"
             />
             <TextField
+              id="txt-password"
               margin="normal"
               required
               fullWidth
               name="password"
-              label="Password"
+              onChange={handleChange}
               type="password"
-              id="password"
-              autoComplete="current-password"
+              value={formState.values.password || ""}
+              variant="outlined"
             />
             <Button
               type="submit"
@@ -84,7 +121,7 @@ export default function SignIn() {
                 <Link to="/signup">{"Don't have an account? Sign Up"}</Link>
               </Grid>
             </Grid>
-          </Box>
+          </form>
         </Box>
       </Container>
     </ThemeProvider>
