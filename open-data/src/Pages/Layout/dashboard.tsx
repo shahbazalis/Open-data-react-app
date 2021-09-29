@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import MuiDrawer from "@mui/material/Drawer";
@@ -11,10 +11,11 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import { MainListItems } from "./list";
+import { MainListItems } from "./List";
 import InputIcon from "@material-ui/icons/Input";
 import Tooltip from "@material-ui/core/Tooltip";
 import { useHistory } from "react-router-dom";
+import { removeStorageData } from "../../Utility/StorageSession";
 
 const drawerWidth: number = 240;
 
@@ -76,6 +77,7 @@ function DashboardContent() {
   let history = useHistory();
 
   const handleSignOut = async () => {
+    await removeStorageData("accessToken");
     let path = `/`;
     history.push(path);
   };
@@ -133,20 +135,6 @@ function DashboardContent() {
           <List>{MainListItems}</List>
           <Divider />
         </Drawer>
-        {/* <Box
-          component="main"
-          sx={{
-            backgroundColor: (theme) =>
-              theme.palette.mode === "light"
-                ? theme.palette.grey[100]
-                : theme.palette.grey[900],
-            flexGrow: 1,
-            height: "100vh",
-            overflow: "auto",
-          }}
-        >
-          <Toolbar />
-        </Box> */}
       </Box>
     </ThemeProvider>
   );

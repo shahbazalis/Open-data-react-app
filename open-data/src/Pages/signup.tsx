@@ -1,27 +1,64 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { LooseObject } from "../Utility/Interface";
+import { signup, UserInfo } from "../Models/Apis";
 
 const theme = createTheme();
 
+const emptyObject: LooseObject = {};
+
 export default function SignUp() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  let history = useHistory();
+  const [formState, setFormState] = useState({
+    values: emptyObject,
+  });
+
+  useEffect(() => {
+    // * set the variable value
+    setFormState((formState) => ({
+      ...formState,
+    }));
+  }, [formState.values]);
+
+  // text input change event call
+  const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    // *event.persist(), which will remove the synthetic event from the pool and allow references to the event to be retained by user code.
+    event.persist();
+    // * set the variable value in values and touched status
+    setFormState((formState) => ({
+      ...formState,
+      values: {
+        ...formState.values,
+        [event.target.name]:
+          event.target.type === "checkbox"
+            ? event.target.checked
+            : event.target.value,
+      },
+    }));
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+
+    const userInfo: UserInfo = {
+      email: formState.values.email.toLowerCase(),
+      password: formState.values.password,
+    };
+    const signupResult = await signup(userInfo);
+    if (signupResult) {
+      let path = `/`;
+      history.push(path);
+    }
   };
 
   return (
@@ -42,36 +79,30 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 3 }}
-          >
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                />
-              </Grid>
-              <Grid item xs={12}></Grid>
-            </Grid>
+          <form onSubmit={handleSubmit}>
+            <TextField
+              id="txt-email"
+              margin="normal"
+              required
+              fullWidth
+              name="email"
+              onChange={handleChange}
+              type="text"
+              value={formState.values.email || ""}
+              variant="outlined"
+              label="Email Address"
+            />
+            <TextField
+              id="txt-password"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              onChange={handleChange}
+              type="password"
+              value={formState.values.password || ""}
+              variant="outlined"
+            />
             <Button
               type="submit"
               fullWidth
@@ -85,7 +116,7 @@ export default function SignUp() {
                 <Link to="/">Already have an account? Sign in</Link>
               </Grid>
             </Grid>
-          </Box>
+          </form>
         </Box>
       </Container>
     </ThemeProvider>

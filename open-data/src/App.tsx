@@ -8,19 +8,19 @@ import {
   withRouter,
   Redirect,
 } from "react-router-dom";
-import SignIn from "./Pages/signin";
-import SignUp from "./Pages/signup";
-import MainPage from "./Pages/mainPage";
-import SensorData from "./Pages/sensorData";
-import AuthReducer from "./utility/AuthReducer";
+import SignIn from "./Pages/SignIn";
+import SignUp from "./Pages/SignUp";
+import MainPage from "./Pages/MainPage";
+import SensorData from "./Pages/SensorData";
+import AuthReducer from "./Utility/AuthReducer";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import { createStore } from "redux";
-import { getStorageData } from "./utility/StorageSession";
-
+import { getStorageData } from "./Utility/StorageSession";
+import { StateInterface } from "./Utility/Interface";
 const store = createStore(AuthReducer);
 
 const RouteComponent = () => {
-  const isSignout = useSelector((state: any) => state.isSignout);
+  const isSignout = useSelector((state: StateInterface) => state.isSignout);
   const dispatch = useDispatch();
   useEffect(() => {
     // Fetch the token from storage then navigate to our appropriate place

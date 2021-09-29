@@ -11,9 +11,9 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useDispatch } from "react-redux";
-import { login, UserInfo } from "../models/apis";
-import { LooseObject } from "../utility/interface";
-import { getStorageData } from "../utility/StorageSession";
+import { login, UserInfo } from "../Models/Apis";
+import { LooseObject } from "../Utility/Interface";
+import { getStorageData } from "../Utility/StorageSession";
 
 const theme = createTheme();
 

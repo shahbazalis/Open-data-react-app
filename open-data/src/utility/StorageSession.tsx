@@ -5,3 +5,7 @@ export function getStorageData(key: string) {
 export function setStorageData(key: string, value: any) {
   return sessionStorage.setItem(key, value);
 }
+
+export function removeStorageData(key: string) {
+  return sessionStorage.removeItem(key);
+}
