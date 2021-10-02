@@ -12,11 +12,11 @@ import SignIn from "./Pages/signin";
 import SignUp from "./Pages/signup";
 import MainPage from "./Pages/mainPage";
 import SensorData from "./Pages/sensorData";
-import AuthReducer from "./Utility/AuthReducer";
+import AuthReducer from "./utility/AuthReducer";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import { createStore } from "redux";
-import { getStorageData } from "./Utility/StorageSession";
-import { StateInterface } from "./Utility/interface";
+import { getStorageData } from "./utility/StorageSession";
+import { StateInterface } from "./utility/interface";
 const store = createStore(AuthReducer);
 
 const RouteComponent = () => {

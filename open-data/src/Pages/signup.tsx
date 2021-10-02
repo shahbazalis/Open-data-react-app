@@ -10,8 +10,8 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { LooseObject , UserInfo } from "../Utility/interface";
-import { signup } from "../Models/apis";
+import { LooseObject , UserInfo } from "../utility/interface";
+import { signup } from "../models/apis";
 
 const theme = createTheme();
 

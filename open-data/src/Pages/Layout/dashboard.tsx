@@ -15,7 +15,7 @@ import { MainListItems } from "./list";
 import InputIcon from "@material-ui/icons/Input";
 import Tooltip from "@material-ui/core/Tooltip";
 import { useHistory } from "react-router-dom";
-import { removeStorageData } from "../../Utility/StorageSession";
+import { removeStorageData } from "../../utility/StorageSession";
 
 const drawerWidth: number = 240;
 

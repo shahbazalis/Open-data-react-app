@@ -1,6 +1,6 @@
-import axios from "../Utility/AxiosIstance";
-import { setStorageData } from "../Utility/StorageSession";
-import { UserInfo } from "../Utility/interface";
+import axios from "../utility/AxiosIstance";
+import { setStorageData } from "../utility/StorageSession";
+import { UserInfo } from "../utility/interface";
 
 export const signup = async (userInfo: UserInfo) => {
   try {
