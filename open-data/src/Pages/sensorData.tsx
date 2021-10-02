@@ -32,8 +32,8 @@ const SensorData = () => {
               label: "Value",
               data: values.map((value) => value),
               backgroundColor: [
-                "#ffbb11",
-                "#ecf0f1",
+                "#000080",
+                "#800000",
                 "#50AF95",
                 "#f3ba2f",
                 "#2a71d0",

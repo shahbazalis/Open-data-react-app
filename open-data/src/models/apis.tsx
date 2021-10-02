@@ -1,10 +1,6 @@
 import axios from "../Utility/AxiosIstance";
 import { setStorageData } from "../Utility/StorageSession";
-
-export interface UserInfo {
-  email: string;
-  password: string;
-}
+import { UserInfo } from "../Utility/Interface";
 
 export const signup = async (userInfo: UserInfo) => {
   try {
@@ -30,9 +26,7 @@ export const login = async (userInfo: UserInfo) => {
 export const getData = async () => {
   try {
     const url = "/events";
-    const sensorData = await axios.get(
-      url
-    );
+    const sensorData = await axios.get(url);
     return sensorData.data;
   } catch (err) {
     console.log("Get Sensor Data error:", err);

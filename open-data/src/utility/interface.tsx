@@ -14,3 +14,8 @@ export interface SensorDataInterface{
   sensor3: number;
   sensor4: number;
 }
+
+export interface UserInfo {
+  email: string;
+  password: string;
+}
