@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { getData } from "../Models/Apis";
-import { SensorDataInterface } from "../Utility/Interface";
+import { getData } from "../Models/apis";
+import { SensorDataInterface } from "../Utility/interface";
 import { BarChart } from "./Chart";
 
 const SensorData = () => {

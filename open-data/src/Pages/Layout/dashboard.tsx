@@ -11,7 +11,7 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import { MainListItems } from "./List";
+import { MainListItems } from "./list";
 import InputIcon from "@material-ui/icons/Input";
 import Tooltip from "@material-ui/core/Tooltip";
 import { useHistory } from "react-router-dom";

@@ -1,6 +1,6 @@
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
-import Dashboard from "./Dashboard";
+import Dashboard from "./dashboard";
 import { makeStyles } from "@material-ui/core/styles";
 import { createStyles } from "@material-ui/core";
 import { RouteProps } from "react-router-dom";
