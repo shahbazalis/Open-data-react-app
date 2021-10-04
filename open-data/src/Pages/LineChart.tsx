@@ -1,6 +1,6 @@
 import { Line } from "react-chartjs-2";
-
-const LineChart = (props: any) => {
+import {LineChartInterface} from "../utility/interface"
+const LineChart = (props: LineChartInterface) => {
   const data = {
     labels: props.date,
     datasets: [

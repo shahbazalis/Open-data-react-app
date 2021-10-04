@@ -19,3 +19,12 @@ export interface UserInfo {
   email: string;
   password: string;
 }
+
+
+export interface LineChartInterface {
+  date: [];
+ sensor1: [];
+ sensor2: [];
+ sensor3: [];
+ sensor4: [];
+}

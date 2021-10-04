@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { getDataHistory, getSensorData, addDataToDb } from "../models/apis";
 import LineChart from "./LineChart";
 import moment from "moment";
+import { SensorDataInterface } from "../utility/interface";
 import { setStorageData } from "../utility/StorageSession";
 
 export default function MainPage() {
@@ -45,28 +46,34 @@ export default function MainPage() {
         date={
           sensorData?.sdata &&
           sensorData.sdata
-            .map((sdata: any) => moment(sdata.date).format("hh:mm"))
+            .map((sdata: SensorDataInterface) =>
+              moment(sdata.date).format("hh:mm")
+            )
             .slice(-10)
         }
         sensor1={
           sensorData?.sdata &&
           sensorData.sdata
-            .map((sdata: any) => sdata.sensor1).slice(-10)
+            .map((sdata: SensorDataInterface) => sdata.sensor1)
+            .slice(-12)
         }
         sensor2={
           sensorData?.sdata &&
           sensorData.sdata
-          .map((sdata: any) => sdata.sensor2).slice(-10)
+            .map((sdata: SensorDataInterface) => sdata.sensor2)
+            .slice(-12)
         }
         sensor3={
           sensorData?.sdata &&
           sensorData.sdata
-          .map((sdata: any) => sdata.sensor3).slice(-10)
+            .map((sdata: SensorDataInterface) => sdata.sensor3)
+            .slice(-12)
         }
         sensor4={
           sensorData?.sdata &&
           sensorData.sdata
-            .map((sdata: any) => sdata.sensor4).slice(-10)
+            .map((sdata: SensorDataInterface) => sdata.sensor4)
+            .slice(-12)
         }
       />
     </div>

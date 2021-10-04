@@ -1,6 +1,6 @@
 import axios from "../utility/AxiosIstance";
 import { setStorageData } from "../utility/StorageSession";
-import { UserInfo } from "../utility/interface";
+import { UserInfo,SensorDataInterface } from "../utility/interface";
 
 export const signup = async (userInfo: UserInfo) => {
   try {
@@ -36,11 +36,11 @@ export const getSensorData = async () => {
   }
 };
 
-export const addDataToDb = async (obj: any) => {
+export const addDataToDb = async (sensorData: SensorDataInterface) => {
   try {
     const url = "http://localhost:8080/SensorsData/";
-    const sensorData = await axios.post(url, obj);
-    return sensorData;
+    const sensorDataAdded = await axios.post(url, sensorData);
+    return sensorDataAdded;
   } catch (err) {
     console.log("Add Data error:", err);
     throw err;
