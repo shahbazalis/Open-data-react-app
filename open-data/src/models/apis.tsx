@@ -38,7 +38,7 @@ export const getSensorData = async () => {
 
 export const addDataToDb = async (sensorData: SensorDataInterface) => {
   try {
-    const url = "http://localhost:8080/SensorsData/";
+    const url = "https://open-data-react-app.herokuapp.com:8080/SensorsData/";
     const sensorDataAdded = await axios.post(url, sensorData);
     return sensorDataAdded;
   } catch (err) {
@@ -49,7 +49,7 @@ export const addDataToDb = async (sensorData: SensorDataInterface) => {
 
 export const getDataHistory = async () => {
   try {
-    const url = "http://localhost:8080/SensorsData/";
+    const url = "https://open-data-react-app.herokuapp.com:8080/SensorsData/";
     const sensorData = await axios.get(url);
     return sensorData.data;
   } catch (err) {
