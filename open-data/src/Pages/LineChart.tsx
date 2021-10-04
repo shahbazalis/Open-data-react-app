@@ -2,7 +2,7 @@ import { Line } from "react-chartjs-2";
 
 const LineChart = (props: any) => {
   const data = {
-    labels: ["1", "2", "3", "4", "5", "6"],
+    labels: props.date,
     datasets: [
       {
         label: "Sensor-1",

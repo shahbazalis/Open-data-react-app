@@ -13,7 +13,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useDispatch } from "react-redux";
 import { login } from "../models/apis";
 import { LooseObject,UserInfo } from "../utility/interface";
-import { getStorageData } from "../utility/StorageSession";
+import { getStorageData,setStorageData } from "../utility/StorageSession";
 
 const theme = createTheme();
 
@@ -32,7 +32,27 @@ export default function SignIn() {
       ...formState,
     }));
   }, [formState.values]);
+  useEffect(() => {
+    // Fetch the token from storage then navigate to our appropriate place
+    const bootstrapAsync = async () => {
+      try {
 
+        const accessToken = await getStorageData("accessToken");
+        if (accessToken !== null) {
+          dispatch({
+            type: "RESTORE_TOKEN",
+            accessToken: accessToken,
+          });
+          let path = `/home`;
+      history.push(path);
+        }
+      } catch (e) {
+        // Restoring token failed
+        console.log(e);
+      }
+    };
+    bootstrapAsync();
+  }, []);
   // text input change event call
   const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     // *event.persist(), which will remove the synthetic event from the pool and allow references to the event to be retained by user code.
@@ -59,6 +79,8 @@ export default function SignIn() {
     };
     const loginResult = await login(userInfo);
     if (loginResult) {
+
+      setStorageData("userInfo",userInfo);
       const accessToken = await getStorageData("accessToken");
       dispatch({ type: "SIGN_IN", accessToken: accessToken });
       let path = `/home`;

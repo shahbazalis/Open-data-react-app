@@ -4,10 +4,10 @@ export interface LooseObject {
 
 export interface StateInterface {
   isSignout: boolean;
-  accessToken: any;
+  accessToken: string;
 }
 
-export interface SensorDataInterface{
+export interface SensorDataInterface {
   date: string;
   sensor1: null;
   sensor2: number;

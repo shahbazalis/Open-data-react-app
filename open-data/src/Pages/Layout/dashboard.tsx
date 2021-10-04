@@ -15,7 +15,10 @@ import { MainListItems } from "./list";
 import InputIcon from "@material-ui/icons/Input";
 import Tooltip from "@material-ui/core/Tooltip";
 import { useHistory } from "react-router-dom";
-import { removeStorageData } from "../../utility/StorageSession";
+import {
+  removeStorageData,
+  getStorageData,
+} from "../../utility/StorageSession";
 
 const drawerWidth: number = 240;
 
@@ -77,9 +80,15 @@ function DashboardContent() {
   let history = useHistory();
 
   const handleSignOut = async () => {
-    await removeStorageData("accessToken");
     let path = `/`;
+  
+    const intervalId: any = await getStorageData("intervalId");
+    clearInterval(intervalId);
+    await removeStorageData("accessToken");
+    await removeStorageData("intervalId");
+    await removeStorageData("userInfo");
     history.push(path);
+
   };
 
   return (

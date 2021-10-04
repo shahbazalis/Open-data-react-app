@@ -9,6 +9,7 @@ export const signup = async (userInfo: UserInfo) => {
     return signupResult;
   } catch (err) {
     console.log("Sign up error:", err);
+    throw err;
   }
 };
 
@@ -20,15 +21,39 @@ export const login = async (userInfo: UserInfo) => {
     return loginResult;
   } catch (err) {
     console.log("Login error:", err);
+    throw err;
   }
 };
 
-export const getData = async () => {
+export const getSensorData = async () => {
   try {
     const url = "/events";
     const sensorData = await axios.get(url);
     return sensorData.data;
   } catch (err) {
     console.log("Get Sensor Data error:", err);
+    throw err;
+  }
+};
+
+export const addDataToDb = async (obj: any) => {
+  try {
+    const url = "http://localhost:8080/SensorsData/";
+    const sensorData = await axios.post(url, obj);
+    return sensorData;
+  } catch (err) {
+    console.log("Add Data error:", err);
+    throw err;
+  }
+};
+
+export const getDataHistory = async () => {
+  try {
+    const url = "http://localhost:8080/SensorsData/";
+    const sensorData = await axios.get(url);
+    return sensorData.data;
+  } catch (err) {
+    console.log("Get Sensor Data error:", err);
+    throw err;
   }
 };

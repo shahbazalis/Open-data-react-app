@@ -1,57 +1,74 @@
-import Table from "@mui/material/Table";
-//import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
+import { useState, useEffect } from "react";
+import { getDataHistory, getSensorData, addDataToDb } from "../models/apis";
+import LineChart from "./LineChart";
+import moment from "moment";
+import { setStorageData } from "../utility/StorageSession";
 
 export default function MainPage() {
+  const [sensorData, setSensorData] = useState<any>({ sdata: [] });
+  useEffect(() => {
+    (async () => {
+      try {
+        const sensorDataHistory = await getDataHistory();
+        await setSensorData(sensorDataHistory);
+        setSensorData((prevState: any) => {
+          return { ...prevState, sdata: sensorDataHistory };
+        });
+
+        const id = await setInterval(getDataHistoryDetails, 3600 * 1000);
+        await setStorageData("intervalId", id);
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+  }, []);
+
+  const getDataHistoryDetails = async () => {
+    try {
+      const newSensorData = await getSensorData();
+      await addDataToDb(newSensorData);
+
+      console.log(sensorData, newSensorData);
+      setSensorData((prevState: any) => {
+        return { ...prevState, sdata: prevState.sdata.concat([newSensorData]) };
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {}, [sensorData]);
+
   return (
     <div>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} size="small" aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell width="30%">Todos</TableCell>
-              <TableCell>Description&nbsp;</TableCell>
-              <TableCell>Status&nbsp;</TableCell>
-              <TableCell>Actions&nbsp;</TableCell>
-            </TableRow>
-          </TableHead>
-          {/* <TableBody>
-            {todo.map((row: TodoItemObj) => (
-              <TableRow
-                key={row.id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                {row.status === "Pending" ? (
-                  <TableCell component="th" scope="row" width="30%">
-                    {row.todo}
-                  </TableCell>
-                ) : (
-                  <TableCell
-                    component="th"
-                    scope="row"
-                    style={{ textDecorationLine: "line-through" }}
-                  >
-                    {row.todo}
-                  </TableCell>
-                )}
-                <TableCell>{row.description}</TableCell>
-                <TableCell onClick={() => handleStatusChange(row)}>
-                  {row.status}
-                </TableCell>
-                <TableCell>
-                  <DeleteButton
-                    deleteTodoItem={() => handleTodoItemDelete(row)}
-                  />
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody> */}
-        </Table>
-      </TableContainer>
+      <LineChart
+        date={
+          sensorData?.sdata &&
+          sensorData.sdata
+            .map((sdata: any) => moment(sdata.date).format("hh:mm"))
+            .slice(-10)
+        }
+        sensor1={
+          sensorData?.sdata &&
+          sensorData.sdata
+            .map((sdata: any) => sdata.sensor1).slice(-10)
+        }
+        sensor2={
+          sensorData?.sdata &&
+          sensorData.sdata
+          .map((sdata: any) => sdata.sensor2).slice(-10)
+        }
+        sensor3={
+          sensorData?.sdata &&
+          sensorData.sdata
+          .map((sdata: any) => sdata.sensor3).slice(-10)
+        }
+        sensor4={
+          sensorData?.sdata &&
+          sensorData.sdata
+            .map((sdata: any) => sdata.sensor4).slice(-10)
+        }
+      />
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getData } from "../models/apis";
+import { getSensorData } from "../models/apis";
 import { SensorDataInterface } from "../utility/interface";
 import { BarChart } from "./Chart";
 
@@ -9,16 +9,15 @@ const SensorData = () => {
   useEffect(() => {
     (async () => {
       try {
-        //setLoading(true);
-        const getSensorData: SensorDataInterface = await getData();
-        const keys = Object.entries(getSensorData)
+        const getData: SensorDataInterface = await getSensorData();
+        const keys = Object.entries(getData)
           .filter(
             ([key, value]) =>
               `${key}`[value] !== "undefined" && `${key}` !== "date"
           ) //has options
           .map(([key, value]) => `${key}`);
 
-        const values = Object.entries(getSensorData)
+        const values = Object.entries(getData)
           .filter(
             ([key, value]) =>
               `${key}`[value] !== "undefined" && `${key}` !== "date"
@@ -41,9 +40,7 @@ const SensorData = () => {
             },
           ],
         });
-        //setLoading(false);
       } catch (err) {
-        //setLoading(false);
         console.log(err);
       }
     })();
