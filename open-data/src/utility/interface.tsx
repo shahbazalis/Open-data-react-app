@@ -20,11 +20,20 @@ export interface UserInfo {
   password: string;
 }
 
-
 export interface LineChartInterface {
   date: [];
- sensor1: [];
- sensor2: [];
- sensor3: [];
- sensor4: [];
+  sensor1: [];
+  sensor2: [];
+  sensor3: [];
+  sensor4: [];
 }
+
+export interface ChartData {
+  labels: string[];
+  datasets: {
+    label: string;
+    data: string[];
+    backgroundColor: string[];
+  };
+}
+
