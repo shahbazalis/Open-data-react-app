@@ -9,10 +9,14 @@ export interface StateInterface {
 
 export interface SensorDataInterface {
   date: string;
-  sensor1: null;
+  sensor1: number;
   sensor2: number;
   sensor3: number;
   sensor4: number;
+}
+
+export interface ApiResponseData{
+  sdata:SensorDataInterface[]
 }
 
 export interface UserInfo {
@@ -21,19 +25,22 @@ export interface UserInfo {
 }
 
 export interface LineChartInterface {
-  date: [];
-  sensor1: [];
-  sensor2: [];
-  sensor3: [];
-  sensor4: [];
+  date: string[];
+  sensor1: number[];
+  sensor2: number[];
+  sensor3: number[];
+  sensor4: number[];
 }
 
 export interface ChartData {
   labels: string[];
   datasets: {
     label: string;
-    data: string[];
-    backgroundColor: string[];
+    data: number[];
+    backgroundColor: string;
   };
 }
+
+
+ export type IntervalType = string |null;
 

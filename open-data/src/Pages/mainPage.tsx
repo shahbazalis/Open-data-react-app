@@ -2,17 +2,17 @@ import { useState, useEffect } from "react";
 import { getDataHistory, getSensorData, addDataToDb } from "../models/apis";
 import LineChart from "./LineChart";
 import moment from "moment";
-import { SensorDataInterface } from "../utility/interface";
+import { SensorDataInterface,ApiResponseData} from "../utility/interface";
 import { setStorageData } from "../utility/StorageSession";
 
 export default function MainPage() {
-  const [sensorData, setSensorData] = useState<any>({ sdata: [] });
+  const [sensorData, setSensorData] = useState<ApiResponseData>({ sdata: [] });
   useEffect(() => {
     (async () => {
       try {
         const sensorDataHistory = await getDataHistory();
         await setSensorData(sensorDataHistory);
-        setSensorData((prevState: any) => {
+        setSensorData((prevState: ApiResponseData) => {
           return { ...prevState, sdata: sensorDataHistory };
         });
 
@@ -28,7 +28,7 @@ export default function MainPage() {
     try {
       const newSensorData = await getSensorData();
       await addDataToDb(newSensorData);
-      setSensorData((prevState: any) => {
+      setSensorData((prevState: ApiResponseData) => {
         return { ...prevState, sdata: prevState.sdata.concat([newSensorData]) };
       });
     } catch (err) {

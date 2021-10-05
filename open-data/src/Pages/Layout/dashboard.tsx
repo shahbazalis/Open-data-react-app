@@ -19,6 +19,7 @@ import {
   removeStorageData,
   getStorageData,
 } from "../../utility/StorageSession";
+import {IntervalType} from "../../utility/interface"
 
 const drawerWidth: number = 240;
 
@@ -81,9 +82,13 @@ function DashboardContent() {
 
   const handleSignOut = async () => {
     let path = `/`;
+
   
-    const intervalId: any = await getStorageData("intervalId");
-    clearInterval(intervalId);
+    const intervalId: IntervalType = await getStorageData("intervalId");
+    if(intervalId){
+      clearInterval(parseInt(intervalId));
+    }
+   
     await removeStorageData("accessToken");
     await removeStorageData("intervalId");
     await removeStorageData("userInfo");
