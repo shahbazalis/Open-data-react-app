@@ -38,9 +38,7 @@ export const getSensorData = async () => {
 
 export const addDataToDb = async (sensorData: SensorDataInterface) => {
   try {
-    const PORT = process.env.PORT || 5000;
-    const url = `https://open-data-react-app.herokuapp.com:${PORT}/SensorsData/`;
-    //const url = "http://localhost:8080/SensorsData/"
+    const url = "https://test-json-fake-server.herokuapp.com/SensorsData"
     const sensorDataAdded = await axios.post(url, sensorData);
     return sensorDataAdded;
   } catch (err) {
@@ -51,9 +49,7 @@ export const addDataToDb = async (sensorData: SensorDataInterface) => {
 
 export const getDataHistory = async () => {
   try {
-    const PORT = process.env.PORT || 5000;
-    const url = `https://open-data-react-app.herokuapp.com:${PORT}/SensorsData/`;
-    //const url = "http://localhost:8080/SensorsData/"
+    const url = "https://test-json-fake-server.herokuapp.com/SensorsData"
     const sensorData = await axios.get(url);
     return sensorData.data;
   } catch (err) {

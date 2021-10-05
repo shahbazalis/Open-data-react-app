@@ -40,7 +40,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "dev-server": "json-server --watch -p 8080 db.json",
-    "dev": "(start react-scripts start &&  node server.js)",
+    "dev": "(start react-scripts start)",
     "start": "npm run dev"
   },
   "eslintConfig": {
