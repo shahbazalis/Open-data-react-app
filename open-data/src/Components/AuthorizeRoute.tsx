@@ -2,7 +2,7 @@ import { Route, Redirect, RouteProps } from "react-router-dom";
 import MainLayout from "../Pages/Layout/MainLayout";
 
 interface PrivateRouteProps extends RouteProps {
-  Component: any;
+  Component: {};
   lbl: string;
   isSignout: Boolean;
 }

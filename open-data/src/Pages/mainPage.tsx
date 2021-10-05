@@ -28,8 +28,6 @@ export default function MainPage() {
     try {
       const newSensorData = await getSensorData();
       await addDataToDb(newSensorData);
-
-      console.log(sensorData, newSensorData);
       setSensorData((prevState: any) => {
         return { ...prevState, sdata: prevState.sdata.concat([newSensorData]) };
       });
